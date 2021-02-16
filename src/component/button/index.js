@@ -7,10 +7,10 @@ class Button extends Component {
         this.state = {  }
     }
     render() { 
-        const { button, type, name } = this.props
+        const { button, type, name, onClick } = this.props
         return ( 
             <div>
-                <button type={type} name={name}>{button}</button>
+                <button type={type} name={name} onClick={onClick}>{button}</button>
             </div>
          );
     }
