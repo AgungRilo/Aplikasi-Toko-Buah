@@ -7,18 +7,41 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      dataBuah:[],
+      fruit:[],
       nama: "",
       stok: "",
-      harga: ""
+      harga: "",
+      title:"Aplikasi Toko Buah",
+      act:0
      }
   }
 
-  save = obj => {
-    const { nama } = obj
-    console.log(nama);
-    let newJenis = this.state.jenis
+  save = () => {
+    
+    const {nama,stok,harga} = this.state
+    let newFruit = this.state.fruit
+    if (this.state.act === 0) {//input
 
+      newFruit.push({
+        nama,stok,harga
+      })
+      console.log(nama);
+      console.log(newFruit);
+      this.setState({
+        fruit: newFruit,
+        nama:"",
+        stok:"",
+        harga:""
+      })
+    } else {//update
+      let idx = this.state.idx;
+    
+      this.setState({
+        fruit: newFruit,
+        act: 0
+      })
+      alert('Data Berhasil DiUpdate..')
+    }
   }
 
   setValue = el =>{
@@ -33,7 +56,7 @@ class App extends Component {
       
         <div className="container">
                 <div className="top">
-                    <H1 h1="Aplikasi Toko Buah" />
+                    <H1 h1={this.state.title} />
                     <div>
                         <Label label="Nama Buah" />
                         <Input
@@ -70,7 +93,7 @@ class App extends Component {
                         />
                     </div>
                     <div className="tombol">
-                        <Button  type="button" name="btn" button="Add" />
+                        <Button onClick={this.save}  type="button" name="btn" button="Add" />
                     </div>
                 </div>
                 <div className="bottom">
@@ -85,7 +108,24 @@ class App extends Component {
                             </tr>
                         </thead>
                         <tbody>
-
+                        {
+                        this.state.fruit.map((fruit, idx) => {
+                            return (
+                                
+                                <tr key={idx}>
+                                    <td>{idx + 1}</td>
+                                    <td>{fruit.nama}</td>
+                                    <td>{fruit.stok}</td>
+                                    <td>{fruit.harga}</td>
+                                    <td>
+                                        <button onClick={()=>this.edit(idx)}>Sunting</button>
+                                        <button onClick={() =>{ this.props.idx({ idx })} }>Hapus</button>
+                                    </td>
+                                    
+                                </tr>
+                            )
+                        })
+                    }
                         </tbody>
                     </table>
                 </div>
